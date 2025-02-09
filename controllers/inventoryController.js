@@ -1,5 +1,11 @@
+const queries = require('../db/queries');
+
 exports.inventoryGet = async (req, res) => {
-  res.render('index', { title: 'Inventory' });
+  const genres = await queries.getAllGenres();
+  res.render('index', {
+    title: 'Inventory',
+    genres: genres,
+  });
 };
 
 exports.productGet = async (req, res) => {};
