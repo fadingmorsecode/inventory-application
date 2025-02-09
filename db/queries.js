@@ -16,4 +16,12 @@ async function getAllDevelopers() {
   return rows;
 }
 
-module.exports = { getAllGenres, getAllDevelopers };
+async function getProductsByCategory(category, value) {
+  const res = await pool.query(`SELECT * FROM games WHERE ${category} = $1`, [
+    value,
+  ]);
+  const rows = res.rows;
+  return rows;
+}
+
+module.exports = { getAllGenres, getAllDevelopers, getProductsByCategory };
