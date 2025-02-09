@@ -46,7 +46,7 @@ VALUES
     (11, 'Action RPG'),
     (12, 'FPS'),
     (13, 'Survival Horror'),
-    (14, 'Third-Person Shoter'),
+    (14, 'Third-Person Shooter'),
     (15, '3D Platformer');
 
 INSERT INTO developers (game_id, developer)

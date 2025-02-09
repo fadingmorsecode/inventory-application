@@ -1,5 +1,6 @@
 <% if (products) { %> <% products.forEach(product => { %>
-<p><%= product.game %></p>
-<p><%= product.genre %></p>
-<p><%= product.developer %></p>
+<p>Game: <%= product.game %></p>
+<p>Genre: <%= product.genre %></p>
+<p>Developer: <%= product.developer %></p>
+<br></br>
 <% }) %> <% } %>
