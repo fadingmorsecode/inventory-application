@@ -1,0 +1,10 @@
+<form>
+  <select id="developersSelect" name="developers">
+    <% developers.forEach(developer => { %>
+    <option value="<%= developer.developer %>">
+      <%= developer.developer %>
+    </option>
+    <% }) %>
+  </select>
+  <button type="submit">View By Developer</button>
+</form>

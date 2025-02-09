@@ -8,4 +8,12 @@ async function getAllGenres() {
   return rows;
 }
 
-module.exports = { getAllGenres };
+async function getAllDevelopers() {
+  const res = await pool.query(
+    'SELECT DISTINCT developer FROM developers ORDER BY developer ASC'
+  );
+  const rows = res.rows;
+  return rows;
+}
+
+module.exports = { getAllGenres, getAllDevelopers };
