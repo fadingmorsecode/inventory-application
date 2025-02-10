@@ -57,4 +57,18 @@ exports.updateGenrePost = async (req, res) => {
   res.redirect(`/product/${productId}`);
 };
 
+exports.updateDeveloperGet = async (req, res) => {
+  const productId = req.params.productId;
+  const product = await queries.getProductById(productId);
+  const developer = product.developer;
+  res.render('editDeveloper', { id: product.id, developer: developer });
+};
+
+exports.updateDeveloperPost = async (req, res) => {
+  const productId = req.params.productId;
+  const value = req.body.developer;
+  await queries.updateProduct('developer', productId, value);
+  res.redirect(`/product/${productId}`);
+};
+
 exports.deleteGet = async (req, res) => {};
