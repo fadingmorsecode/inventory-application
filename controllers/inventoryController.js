@@ -21,8 +21,26 @@ exports.inventoryGet = async (req, res) => {
   });
 };
 
-exports.productGet = async (req, res) => {};
+exports.productGet = async (req, res) => {
+  const productId = req.params.productId;
+  const product = await queries.getProductById(productId);
+  console.log(product);
+  res.render('productDetails', { product: product });
+};
 
-exports.updateGet = async (req, res) => {};
+exports.updateGameGet = async (req, res) => {
+  const productId = req.params.productId;
+  const product = await queries.getProductById(productId);
+  const game = product.game;
+  console.log(game);
+  res.render('editGame', { id: product.id, game: game });
+};
+
+exports.updateGamePost = async (req, res) => {
+  const productId = req.params.productId;
+  const value = req.body.game;
+  await queries.updateProduct('game', productId, value);
+  res.redirect(`/product/${productId}`);
+};
 
 exports.deleteGet = async (req, res) => {};

@@ -24,4 +24,23 @@ async function getProductsByCategory(category, value) {
   return rows;
 }
 
-module.exports = { getAllGenres, getAllDevelopers, getProductsByCategory };
+async function getProductById(id) {
+  const res = await pool.query('SELECT * FROM games WHERE id = $1', [id]);
+  const rows = res.rows[0];
+  return rows;
+}
+
+async function updateProduct(column, id, value) {
+  await pool.query(`UPDATE games SET ${column} = $1 WHERE id = $2`, [
+    value,
+    id,
+  ]);
+}
+
+module.exports = {
+  getAllGenres,
+  getAllDevelopers,
+  getProductsByCategory,
+  getProductById,
+  updateProduct,
+};

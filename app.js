@@ -5,7 +5,7 @@ const inventoryRouter = require('./routes/inventoryRouter');
 require('dotenv').config();
 
 app.use(express.urlencoded({ extended: true }));
-app.get('/', inventoryRouter);
+app.use('/', inventoryRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
