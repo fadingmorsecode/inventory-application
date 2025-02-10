@@ -8,9 +8,17 @@ inventoryRouter.get(
   '/product/:productId/updateGame',
   inventoryController.updateGameGet
 );
+inventoryRouter.get(
+  '/product/:productId/updateGenre',
+  inventoryController.updateGenreGet
+);
 inventoryRouter.post(
   '/product/:productId/updateGame',
   inventoryController.updateGamePost
+);
+inventoryRouter.post(
+  '/product/:productId/updateGenre',
+  inventoryController.updateGenrePost
 );
 
 module.exports = inventoryRouter;

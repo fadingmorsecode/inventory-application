@@ -43,4 +43,18 @@ exports.updateGamePost = async (req, res) => {
   res.redirect(`/product/${productId}`);
 };
 
+exports.updateGenreGet = async (req, res) => {
+  const productId = req.params.productId;
+  const product = await queries.getProductById(productId);
+  const genre = product.genre;
+  res.render('editGenre', { id: product.id, genre: genre });
+};
+
+exports.updateGenrePost = async (req, res) => {
+  const productId = req.params.productId;
+  const value = req.body.genre;
+  await queries.updateProduct('genre', productId, value);
+  res.redirect(`/product/${productId}`);
+};
+
 exports.deleteGet = async (req, res) => {};
