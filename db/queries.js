@@ -35,6 +35,20 @@ async function updateProduct(id, value) {
     `UPDATE games SET game = $1, genre = $2, developer = $3 WHERE id = $4`,
     [value.game, value.genre, value.developer, id]
   );
+  await pool.query('UPDATE genres SET genre = $1 WHERE game_id = $2', [
+    value.genre,
+    id,
+  ]);
+  await pool.query('UPDATE developers SET developer = $1 WHERE game_id = $2', [
+    value.developer,
+    id,
+  ]);
+}
+
+async function deleteProduct(id) {
+  await pool.query('DELETE FROM games WHERE id = $1', [id]);
+  await pool.query('DELETE FROM genres WHERE game_id = $1', [id]);
+  await pool.query('DELETE FROM developers WHERE game_id = $1', [id]);
 }
 
 module.exports = {
@@ -43,4 +57,5 @@ module.exports = {
   getProductsByCategory,
   getProductById,
   updateProduct,
+  deleteProduct,
 };

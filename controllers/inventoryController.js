@@ -10,9 +10,9 @@ exports.inventoryGet = async (req, res) => {
       products = await queries.getProductsByCategory('developer', value);
     }
   }
-  console.log(products);
   const developers = await queries.getAllDevelopers();
   const genres = await queries.getAllGenres();
+  console.log(genres);
   res.render('index', {
     title: 'Inventory',
     genres: genres,
@@ -41,4 +41,10 @@ exports.updateGamePost = async (req, res) => {
   res.redirect(`/product/${productId}`);
 };
 
-exports.deleteGet = async (req, res) => {};
+exports.createGet = async (req, res) => {};
+
+exports.deleteGameGet = async (req, res) => {
+  const productId = req.params.productId;
+  await queries.deleteProduct(productId);
+  res.redirect(`/`);
+};
