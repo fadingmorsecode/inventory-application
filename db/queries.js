@@ -30,11 +30,11 @@ async function getProductById(id) {
   return rows;
 }
 
-async function updateProduct(column, id, value) {
-  await pool.query(`UPDATE games SET ${column} = $1 WHERE id = $2`, [
-    value,
-    id,
-  ]);
+async function updateProduct(id, value) {
+  await pool.query(
+    `UPDATE games SET game = $1, genre = $2, developer = $3 WHERE id = $4`,
+    [value.game, value.genre, value.developer, id]
+  );
 }
 
 module.exports = {

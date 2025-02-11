@@ -31,43 +31,13 @@ exports.productGet = async (req, res) => {
 exports.updateGameGet = async (req, res) => {
   const productId = req.params.productId;
   const product = await queries.getProductById(productId);
-  const game = product.game;
-  console.log(game);
-  res.render('editGame', { id: product.id, game: game });
+  res.render('editGame', { id: product.id, product: product });
 };
 
 exports.updateGamePost = async (req, res) => {
   const productId = req.params.productId;
-  const value = req.body.game;
-  await queries.updateProduct('game', productId, value);
-  res.redirect(`/product/${productId}`);
-};
-
-exports.updateGenreGet = async (req, res) => {
-  const productId = req.params.productId;
-  const product = await queries.getProductById(productId);
-  const genre = product.genre;
-  res.render('editGenre', { id: product.id, genre: genre });
-};
-
-exports.updateGenrePost = async (req, res) => {
-  const productId = req.params.productId;
-  const value = req.body.genre;
-  await queries.updateProduct('genre', productId, value);
-  res.redirect(`/product/${productId}`);
-};
-
-exports.updateDeveloperGet = async (req, res) => {
-  const productId = req.params.productId;
-  const product = await queries.getProductById(productId);
-  const developer = product.developer;
-  res.render('editDeveloper', { id: product.id, developer: developer });
-};
-
-exports.updateDeveloperPost = async (req, res) => {
-  const productId = req.params.productId;
-  const value = req.body.developer;
-  await queries.updateProduct('developer', productId, value);
+  const values = req.body;
+  await queries.updateProduct(productId, values);
   res.redirect(`/product/${productId}`);
 };
 

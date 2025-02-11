@@ -9,7 +9,26 @@
     <h1>Edit Game</h1>
     <form action="/product/<%=id%>/updateGame" method="post">
       <label for="editGameInput">Game:</label>
-      <input type="text" name="game" id="editGameInput" value="<%=game%>" />
+      <input
+        type="text"
+        name="game"
+        id="editGameInput"
+        value="<%=product.game%>"
+      />
+      <label for="editGenreInput">Genre:</label>
+      <input
+        type="text"
+        name="genre"
+        id="editGenreInput"
+        value="<%=product.genre%>"
+      />
+      <label for="editDeveloperInput">Developer:</label>
+      <input
+        type="text"
+        name="developer"
+        id="editDeveloperInput"
+        value="<%=product.developer%>"
+      />
       <button type="submit">Submit</button>
     </form>
   </body>
