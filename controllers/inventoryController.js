@@ -41,7 +41,15 @@ exports.updateGamePost = async (req, res) => {
   res.redirect(`/product/${productId}`);
 };
 
-exports.createGet = async (req, res) => {};
+exports.createGameGet = async (req, res) => {
+  res.render('create', { title: 'Create Product' });
+};
+
+exports.createGamePost = async (req, res) => {
+  const values = req.body;
+  await queries.createProduct(values);
+  res.redirect('/');
+};
 
 exports.deleteGameGet = async (req, res) => {
   const productId = req.params.productId;

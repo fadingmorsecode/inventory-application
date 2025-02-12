@@ -51,6 +51,21 @@ async function deleteProduct(id) {
   await pool.query('DELETE FROM developers WHERE game_id = $1', [id]);
 }
 
+async function createProduct(values) {
+  await pool.query(
+    'INSERT INTO games (game, genre, developer) VALUES ($1, $2, $3)',
+    [values.game, values.genre, values.developer]
+  );
+  await pool.query('INSERT INTO genres (game_id, genre) VALUES ($1, $2)', [
+    values.game,
+    values.genre,
+  ]);
+  await pool.query(
+    'INSERT INTO developers (game_id, developer) VALUES ($1, $2)',
+    [values.game, values.developer]
+  );
+}
+
 module.exports = {
   getAllGenres,
   getAllDevelopers,
@@ -58,4 +73,5 @@ module.exports = {
   getProductById,
   updateProduct,
   deleteProduct,
+  createProduct,
 };
