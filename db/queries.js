@@ -66,6 +66,33 @@ async function createProduct(values) {
   );
 }
 
+async function deleteCategory(category, value) {
+  console.log(category, value);
+  if (category === 'developer') {
+    await pool.query('DELETE FROM developers WHERE developer = $1', [value]);
+    const gameIDS = await pool.query(
+      'SELECT id FROM games WHERE developer = $1',
+      [value]
+    );
+    gameIDS.rows.forEach(async (gameID) => {
+      await pool.query('DELETE FROM genres WHERE game_id = $1', [gameID.id]);
+    });
+    await pool.query('DELETE FROM games WHERE developer = $1', [value]);
+  } else if (category === 'genre') {
+    await pool.query('DELETE FROM genres WHERE genre = $1', [value]);
+    // delete instances of developer where category matches
+    const gameIDS = await pool.query('SELECT id FROM games WHERE genre = $1', [
+      value,
+    ]);
+    gameIDS.rows.forEach(async (gameID) => {
+      await pool.query('DELETE FROM developers WHERE game_id = $1', [
+        gameID.id,
+      ]);
+    });
+    await pool.query('DELETE FROM games WHERE genre = $1', [value]);
+  }
+}
+
 module.exports = {
   getAllGenres,
   getAllDevelopers,
@@ -74,4 +101,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   createProduct,
+  deleteCategory,
 };

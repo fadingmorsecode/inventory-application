@@ -18,5 +18,13 @@ inventoryRouter.get(
   '/product/:productId/delete',
   inventoryController.deleteGameGet
 );
+inventoryRouter.get(
+  '/delete/categories',
+  inventoryController.deleteCategoriesGet
+);
+inventoryRouter.post(
+  '/delete/categories',
+  inventoryController.deleteCategoriesPost
+);
 
 module.exports = inventoryRouter;

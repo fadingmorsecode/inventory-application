@@ -7,10 +7,11 @@
   </head>
   <body>
     <h1>View Inventory by Category</h1>
-    <%- include('genres', {genres: genres}) %> <%- include('developers',
-    {developers: developers}) %> <%- include('productList', {products:
+    <%- include('genres', {genres: genres, action: '', method: ''}) %> <%- include('developers',
+    {developers: developers, action: '', method: ''}) %> <%- include('productList', {products:
     products}) %>
     <br></br>
     <a href="/create">Add Game</a>
+    <a href="/delete/categories">Delete a Category</a>
   </body>
 </html>

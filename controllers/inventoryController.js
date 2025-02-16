@@ -56,3 +56,23 @@ exports.deleteGameGet = async (req, res) => {
   await queries.deleteProduct(productId);
   res.redirect(`/`);
 };
+
+exports.deleteCategoriesGet = async (req, res) => {
+  const genres = await queries.getAllGenres();
+  const developers = await queries.getAllDevelopers();
+  res.render('deleteCategories', { genres: genres, developers: developers });
+};
+
+exports.deleteCategoriesPost = async (req, res) => {
+  const category = req.body;
+  console.log('hello');
+  console.log(category);
+  for (const [key, value] of Object.entries(category)) {
+    if (key === 'genres') {
+      await queries.deleteCategory('genre', value);
+    } else if (key === 'developers') {
+      await queries.deleteCategory('developer', value);
+    }
+  }
+  res.redirect('/');
+};
