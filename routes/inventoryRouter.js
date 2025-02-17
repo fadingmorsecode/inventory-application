@@ -14,9 +14,9 @@ inventoryRouter.post(
   inventoryController.updateGamePost
 );
 inventoryRouter.post('/create', inventoryController.createGamePost);
-inventoryRouter.get(
+inventoryRouter.post(
   '/product/:productId/delete',
-  inventoryController.deleteGameGet
+  inventoryController.deleteGamePost
 );
 inventoryRouter.get(
   '/delete/categories',

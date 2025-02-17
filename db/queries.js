@@ -67,7 +67,6 @@ async function createProduct(values) {
 }
 
 async function deleteCategory(category, value) {
-  console.log(category, value);
   if (category === 'developer') {
     await pool.query('DELETE FROM developers WHERE developer = $1', [value]);
     const gameIDS = await pool.query(

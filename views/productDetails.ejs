@@ -4,7 +4,11 @@
 <p>Genre: <%= product.genre %></p>
 <p>Developer: <%= product.developer %></p>
 <a href="/product/<%=product.id%>/updateGame">Edit</a>
-<a href="/product/<%=product.id%>/delete">Delete</a>
 <br></br>
+<form action="/product/<%=product.id%>/delete" method="post">
+    <label for="adminPassInput">Admin Password:</label>
+    <input type="password" name="adminPassInput">
+    <button type="submit">Delete</button>
+</form>
 <br></br>
 <a href="/">Back</a>

@@ -13,6 +13,10 @@ app.use((err, req, res, next) => {
     .redirect(`/error?message=${encodeURIComponent(err.message)}`);
 });
 
+app.get('/success', (req, res) => {
+  res.render('success');
+});
+
 app.get('/error', (req, res) => {
   const errorMessage = req.query.message || 'An unknown error occurred.';
 

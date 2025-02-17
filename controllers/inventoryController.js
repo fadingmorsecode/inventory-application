@@ -14,16 +14,12 @@ exports.inventoryGet = async (req, res) => {
     const catArray = query.category.split(':');
     const category = catArray[0];
     const value = catArray[1];
-    console.log(value);
     if (category === 'genre') {
-      console.log('running with val:', value);
       products = await queries.getProductsByCategory('genre', value);
-      console.log(products);
     } else if (category === 'developer') {
       products = await queries.getProductsByCategory('developer', value);
     }
   }
-  console.log(products);
   const developers = await queries.getAllDevelopers();
   const genres = await queries.getAllGenres();
   res.render('index', {
@@ -60,14 +56,18 @@ exports.createGameGet = async (req, res) => {
 exports.createGamePost = async (req, res) => {
   const values = req.body;
   await queries.createProduct(values);
-  res.redirect('/');
+  res.redirect('/success');
 };
 
-exports.deleteGameGet = async (req, res) => {
+exports.deleteGamePost = asyncHandler(async (req, res) => {
   const productId = req.params.productId;
-  await queries.deleteProduct(productId);
-  res.redirect(`/`);
-};
+  const passInput = req.body.adminPassInput;
+  if (passInput === process.env.ADMINPASS) {
+    await queries.deleteProduct(productId);
+    return res.redirect(`/success`);
+  }
+  throw new UnauthorizedError('Incorrect admin password');
+});
 
 exports.deleteCategoriesGet = async (req, res) => {
   const genres = await queries.getAllGenres();
@@ -84,10 +84,10 @@ exports.deleteCategoriesPost = asyncHandler(async (req, res) => {
   if (password === process.env.ADMINPASS) {
     if (category === 'genre') {
       await queries.deleteCategory('genre', value);
-      return res.redirect('/');
+      return res.redirect('/success');
     } else if (category === 'developer')
       await queries.deleteCategory('developer', value);
-    return res.redirect('/');
+    return res.redirect('/success');
   }
   throw new UnauthorizedError('Incorrect admin password');
 });
