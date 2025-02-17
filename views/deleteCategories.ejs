@@ -8,8 +8,13 @@
   <body>
     <h1>Delete Categories</h1>
     <p>Select category to delete</p>
-    <%- include('genres', {genres: genres, action: '/delete/categories', method:
-    'post'}) %> <%- include('developers', {developers: developers, action:
-    '/delete/categories', method: 'post'}) %>
+    <form action="/delete/categories" method="post">
+      <label for="categorySelector">Category Selection:</label>
+      <%- include('categorySelector', {genres: genres, developers: developers})
+      %>
+      <label for="adminPassInput">Admin Password</label>
+      <input type="text" name="password" id="adminPassInput" />
+      <button type="submit">Submit</button>
+    </form>
   </body>
 </html>

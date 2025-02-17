@@ -1,0 +1,15 @@
+<select name="category" id="categorySelector">
+  <option value="" disabled selected>Select Category</option>
+  <optgroup label="Genres">
+    <% genres.forEach(genre => { %>
+    <option value="genre:<%= genre.genre %>"><%= genre.genre %></option>
+    <% }) %>
+  </optgroup>
+  <optgroup label="Developers">
+    <% developers.forEach(developer => { %>
+    <option value="developer:<%= developer.developer %>">
+      <%= developer.developer %>
+    </option>
+    <% }) %>
+  </optgroup>
+</select>

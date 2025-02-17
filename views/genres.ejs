@@ -1,8 +1,0 @@
-<form action="<%=action%>" method="<%=method%>">
-  <select id="genresSelect" name="genres">
-    <% genres.forEach(genre => { %>
-    <option value="<%= genre.genre %>"><%= genre.genre %></option>
-    <% }) %>
-  </select>
-  <button type="submit">Submit</button>
-</form>

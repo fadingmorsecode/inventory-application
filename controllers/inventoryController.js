@@ -1,18 +1,31 @@
 const queries = require('../db/queries');
+require('dotenv').config();
+const asyncHandler = require('express-async-handler');
+const UnauthorizedError = require('../errors/passwordError');
+
+const isObjectEmpty = (objectName) => {
+  return JSON.stringify(objectName) === '{}';
+};
 
 exports.inventoryGet = async (req, res) => {
   let products = [];
   const query = req.query;
-  for (const [key, value] of Object.entries(query)) {
-    if (key === 'genres') {
+  if (!isObjectEmpty(query)) {
+    const catArray = query.category.split(':');
+    const category = catArray[0];
+    const value = catArray[1];
+    console.log(value);
+    if (category === 'genre') {
+      console.log('running with val:', value);
       products = await queries.getProductsByCategory('genre', value);
-    } else if (key === 'developers') {
+      console.log(products);
+    } else if (category === 'developer') {
       products = await queries.getProductsByCategory('developer', value);
     }
   }
+  console.log(products);
   const developers = await queries.getAllDevelopers();
   const genres = await queries.getAllGenres();
-  console.log(genres);
   res.render('index', {
     title: 'Inventory',
     genres: genres,
@@ -24,7 +37,6 @@ exports.inventoryGet = async (req, res) => {
 exports.productGet = async (req, res) => {
   const productId = req.params.productId;
   const product = await queries.getProductById(productId);
-  console.log(product);
   res.render('productDetails', { product: product });
 };
 
@@ -63,16 +75,19 @@ exports.deleteCategoriesGet = async (req, res) => {
   res.render('deleteCategories', { genres: genres, developers: developers });
 };
 
-exports.deleteCategoriesPost = async (req, res) => {
-  const category = req.body;
-  console.log('hello');
-  console.log(category);
-  for (const [key, value] of Object.entries(category)) {
-    if (key === 'genres') {
+exports.deleteCategoriesPost = asyncHandler(async (req, res) => {
+  const deleteReq = req.body;
+  const catArray = deleteReq.category.split(':');
+  const category = catArray[0];
+  const value = catArray[1];
+  const password = deleteReq.password;
+  if (password === process.env.ADMINPASS) {
+    if (category === 'genre') {
       await queries.deleteCategory('genre', value);
-    } else if (key === 'developers') {
+      return res.redirect('/');
+    } else if (category === 'developer')
       await queries.deleteCategory('developer', value);
-    }
+    return res.redirect('/');
   }
-  res.redirect('/');
-};
+  throw new UnauthorizedError('Incorrect admin password');
+});
